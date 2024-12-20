@@ -2,12 +2,12 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize(
-    process.env.DB_NAME, 
-    process.env.DB_USER, 
-    process.env.DB_PASSWORD, 
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
     {
         host: process.env.DB_HOST || 'localhost',
-        port: process.env.DB_PORT || 3000,        
+        port: process.env.DB_PORT || 6000,
         dialect: 'postgres',
         // logging: console.log, 
         // // dialectOptions: {
@@ -25,31 +25,31 @@ const sequelize = new Sequelize(
 
 const testConnection = async () => {
     try {
-        console.log('Intentando conectar a PostgreSQL...'); 
+        console.log('Intentando conectar a PostgreSQL...');
         console.log('Configuracion de conexion', {
             host: process.env.DB_HOST || 'localhost',
             port: process.env.DB_PORT || 5432,
             database: process.env.DB_NAME,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
-        }); 
+        });
 
         await sequelize.authenticate();
-        console.log('✅ Conectado a PostgreSQL correctamente'); 
+        console.log('✅ Conectado a PostgreSQL correctamente');
     } catch (error) {
-       console.error('❌ Error al conectar a PostgreSQL:', {
-        message: error.message, 
-        name: error.name,
-        stack: error.stack
-       });
-       throw error;
+        console.error('❌ Error al conectar a PostgreSQL:', {
+            message: error.message,
+            name: error.name,
+            stack: error.stack
+        });
+        throw error;
     }
 };
 
 const syncDatabase = async () => {
     try {
         // Sincroniza todos los modelos definidos
-        await sequelize.sync({ 
+        await sequelize.sync({
             // alter: true // Usa esta opción con cuidado en producción
         });
         console.log('📦 Modelos sincronizados con la base de datos.');

@@ -41,17 +41,21 @@ const startServer = async () => {
 
         // Sincronizar modelos
         await sequelize.sync({ 
-            alter: true,
+            alter: false,
             logging: console.log 
         });
 
         // Configurar puerto
-        const PORT = process.env.PORT || 6000;
+        const PORT = process.env.PORT || 3005;
 
         // Iniciar servidor
-        app.listen(PORT, () => {
+        app.listen(PORT, (err) => {
+            if(err) {
+                console.error(err.message);
+            } else {
             console.log(`Servidor corriendo en puerto ${PORT}`);
             console.log(`Modo: ${process.env.NODE_ENV}`);
+        }
         });
     } catch (error) {
         console.error('Error al iniciar el servidor:', error);

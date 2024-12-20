@@ -76,39 +76,34 @@ const recordProgress = async (req, res) => {
     const userId = req.user.id;
 
     // Buscar plan activo
-    const activePlan = await ReductionPlan.findOne({ 
-      where: { 
-        userId, 
-        status: 'active' 
-      } 
-    });
+    const activePlan = await ReductionPlan.findOne();
+    console.log("activePlan",activePlan)
+    // if (!activePlan) {
+    //   return res.status(400).json({ 
+    //     message: 'No tienes un plan de reducción activo' 
+    //   });
+    // }
 
-    if (!activePlan) {
-      return res.status(400).json({ 
-        message: 'No tienes un plan de reducción activo' 
-      });
-    }
+    // // Validaciones
+    // if (cigarettesSmoked < 0 || cigarettesSmoked > activePlan.currentCigarettes) {
+    //   return res.status(400).json({ 
+    //     message: 'Número de cigarrillos inválido' 
+    //   });
+    // }
 
-    // Validaciones
-    if (cigarettesSmoked < 0 || cigarettesSmoked > activePlan.currentCigarettes) {
-      return res.status(400).json({ 
-        message: 'Número de cigarrillos inválido' 
-      });
-    }
+    // // Crear registro de progreso
+    // const progress = await Progress.create({
+    //   cigarettesSmoked,
+    //   userId,
+    //   reductionPlanId: activePlan.id,
+    //   cravingsIntensity,
+    //   triggers: JSON.stringify(triggers)
+    // });
 
-    // Crear registro de progreso
-    const progress = await Progress.create({
-      cigarettesSmoked,
-      userId,
-      reductionPlanId: activePlan.id,
-      cravingsIntensity,
-      triggers: JSON.stringify(triggers)
-    });
+    // // Actualizar plan
+    // await updateReductionPlan(activePlan, cigarettesSmoked);
 
-    // Actualizar plan
-    await updateReductionPlan(activePlan, cigarettesSmoked);
-
-    res.status(201).json(progress);
+    res.status(201).json(activePlan);
   } catch (error) {
     console.error('Error registrando progreso:', error);
     res.status(500).json({ 

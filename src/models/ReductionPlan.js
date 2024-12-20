@@ -18,6 +18,10 @@ const ReductionPlan = sequelize.define('ReductionPlan', {
   startDate: {
     type: DataTypes.DATE, 
     defaultValue: DataTypes.NOW
+  },
+  status: {
+    type: DataTypes.STRING, 
+    defaultValue: "inactive"
   }
 },{
   timestamps: true,
